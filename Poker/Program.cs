@@ -205,11 +205,34 @@ namespace Poker
 
         static Dictionary<int,int> HelperDict(Card[] hand) //helper
         {
+            /*
+             static int MostOfAKind(Card[] hand)
+             {
+                int[] ranks = new int[15];
+                int[] ofakind = new int[5];
+                foreach(Card c in hand)
+                {
+                    ranks[c.rank]++;
+                    ofakind[ranks[c.rank]]++;
+                }
+                
+                if(ofakind[4] > 0) {return 4;}
+                if(ofakind[3] > 0 && ofakind[2] < 0) {return 32;} //code for full house
+                ...
+             }
+             * /
+             
             Dictionary<int, int> helperDict = new Dictionary<int, int>();
-
             foreach (var c in hand)
             {
-                helperDict[c.rank] = (helperDict.ContainsKey(c.rank)) ? helperDict[c.rank]++ : 1;
+                try
+                {
+                    helperDict[c.rank]++;
+                }
+                catch (SystemException)
+                {
+                    helperDict[c.rank] = 1;
+                }
             }
             return helperDict;
         } // FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
